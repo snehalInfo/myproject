@@ -1,0 +1,52 @@
+@extends('layouts.admin')
+@section('title','Welcome to SuperAdmin dashboard')
+
+@section('content')
+<div class="container mt-5">
+
+    @if(session('success'))
+        <div class="alert alert-success">{{ session('success') }}</div>
+    @endif
+
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <h3 class="me-3">URL List Created by admin or member</h3>
+
+    </div>
+
+    <div class="card">
+        <div class="card-body p-0">
+            @if($data->count())
+                <table class="table table-bordered table-hover mb-0">
+                    <thead class="table-light">
+                        <tr>
+                            <th>#</th>
+                            <th>ShortUrl</th>
+                            <th>Short Code</th>
+                            <th>Created By</th>
+                            <th>Company</th>
+                            <th>Created At</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach($data as $val)
+                            <tr>
+                                <td>{{ $loop->iteration }}</td>
+                                <td>{{ $val->original_url }}</td>
+                                <td>{{ $val->short_code }}</td>
+                                <td>{{ $val->user->name }}</td>
+                                <td>{{ $val->company->name }}</td>
+                                <td>{{ $val->created_at->format('Y-m-d') }}</td>
+                            </tr>
+                        @endforeach
+                    </tbody>
+                </table>
+            @else
+                <div class="p-3">
+                    <p class="mb-0">No admin found.</p>
+                </div>
+            @endif
+        </div>
+    </div>
+
+</div>
+@endsection
